@@ -57,7 +57,7 @@ class TestSTKPush(TestCase):
             data={
                 'Body': {
                     'stkCallback': {
-                        'MerchantRequestID': '72827-4851958-1',
+                        'MerchantRequestID': '<Merchant Request ID>',
                         'CheckoutRequestID': 'ws_CO_30042021100956718221',
                         'ResultCode': 1031,
                         'ResultDesc': 'Request cancelled by user'
