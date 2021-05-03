@@ -3,11 +3,11 @@ MANIFEST.in
 README.rst
 setup.cfg
 setup.py
-django_mpesa.egg-info/PKG-INFO
-django_mpesa.egg-info/SOURCES.txt
-django_mpesa.egg-info/dependency_links.txt
-django_mpesa.egg-info/requires.txt
-django_mpesa.egg-info/top_level.txt
+django_mpesa_payments.egg-info/PKG-INFO
+django_mpesa_payments.egg-info/SOURCES.txt
+django_mpesa_payments.egg-info/dependency_links.txt
+django_mpesa_payments.egg-info/requires.txt
+django_mpesa_payments.egg-info/top_level.txt
 mpesa/__init__.py
 mpesa/admin.py
 mpesa/apps.py
