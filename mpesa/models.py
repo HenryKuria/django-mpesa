@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 
 
 class MpesaDetails(models.Model):
-    site_url = models.URLField(blank=False, null=False)
+    site_url = models.URLField(blank=False, null=False, help_text="enter your site full url without '/' at the end. Example: https://mysite.com")
     daraja_consumer_key = models.CharField(max_length=250, blank=False, null=False)
     daraja_consumer_secret = models.CharField(max_length=250, blank=False, null=False)
     mpesa_shortcode = models.CharField(max_length=250, blank=False, null=False)

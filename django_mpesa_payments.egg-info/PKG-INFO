@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: django-mpesa-payments
-Version: 0.0.2
+Version: 0.0.3
 Summary: A django app to enable online mpesa payments.
 Home-page: https://github.com/HenryKuria/django-mpesa
 Author: Henry Kuria

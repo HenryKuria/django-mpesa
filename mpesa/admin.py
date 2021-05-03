@@ -17,4 +17,3 @@ admin.site.register(MpesaDetails, MpesaDetailsAdmin)
 admin.site.register(LipaNaMpesaOnlinePayment)
 admin.site.register(LipaNaMpesaOnlinePaymentCallbackMetadataItem)
 
-
