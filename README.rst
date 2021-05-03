@@ -39,7 +39,7 @@ APP ENDPOINTS
 
     .. code-block::
 
-        def test_customer_has_sufficient_funds(self):
+        def test_send_stk_push(self):
             response = self.client.post(
                 path='http://localhost:3000/mpesa/request-stk-push/',
                 data={
