@@ -129,7 +129,7 @@ Usage
 
         payment = LipaNaMpesaOnlinePayment.objects.get(checkout_request_Id=<checkout_request_Id>)
 
-        for meta_data in payment.CallbackMetadataItems.all():
+        for meta_data in payment.CallbackMetadataItems:
             print(meta_data.name, meta_data.value)
 
     For each payment, the meta data are:

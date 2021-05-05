@@ -1,6 +1,5 @@
 import json
 from django.views import View
-from django.db import IntegrityError
 from django.http.response import JsonResponse
 from .models import LipaNaMpesaOnlinePayment, LipaNaMpesaOnlinePaymentCallbackMetadataItem
 from .daraja_functions import lipa_na_mpesa_online_payment, lipa_na_mpesa_online_query_request
@@ -30,24 +29,22 @@ class MpesaStkPushCallbackView(View):
         data = json.loads(request.body)['Body']['stkCallback']
 
         if data['ResultCode'] == 0:
-            try:
-                payment = LipaNaMpesaOnlinePayment.objects.create(
-                    merchant_request_Id=data['MerchantRequestID'],
-                    checkout_request_Id=data['CheckoutRequestID'],
-                    result_code=data['ResultCode'],
-                    result_description=data['ResultDesc']
+            payment = LipaNaMpesaOnlinePayment.objects.create(
+                merchant_request_Id=data['MerchantRequestID'],
+                checkout_request_Id=data['CheckoutRequestID'],
+                result_code=data['ResultCode'],
+                result_description=data['ResultDesc']
+            )
+
+            callback_metadata = data.get('CallbackMetadata')
+            items = [item for item in callback_metadata['Item']]
+            for item in items:
+                new_metadata_item = LipaNaMpesaOnlinePaymentCallbackMetadataItem(
+                    payment=payment,
+                    name=item.get('Name'),
+                    value=item.get('Value', '')
                 )
-                callback_metadata = data['CallbackMetadata']
-                items = [item for item in callback_metadata['Item']]
-                for item in items:
-                    new_metadata_item = LipaNaMpesaOnlinePaymentCallbackMetadataItem(
-                        payment=payment,
-                        name=item.get('Name'),
-                        value=item.get('Value', '')
-                    )
-                    new_metadata_item.save()
-            except IntegrityError:
-                pass
+                new_metadata_item.save()
 
         return JsonResponse({"ResultCode": 0, "ResultDesc": "Success", "ThirdPartyTransID": 0})
 

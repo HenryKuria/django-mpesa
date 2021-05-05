@@ -26,10 +26,16 @@ class MpesaDetails(models.Model):
 
 
 class LipaNaMpesaOnlinePayment(models.Model):
-    merchant_request_id = models.CharField(max_length=250, blank=False, null=False)
-    checkout_request_id = models.CharField(max_length=250, blank=False, null=False, unique=True)
+    merchant_request_Id = models.CharField(max_length=250, blank=False, null=False)
+    checkout_request_Id = models.CharField(max_length=250, blank=False, null=False)
     result_code = models.IntegerField(blank=False)
     result_description = models.TextField(blank=False)
+
+    @property
+    def success(self):
+        if self.CallbackMetadataItems.count() > 0:
+            return True
+        return False
 
     def __str__(self):
         return self.checkout_request_Id
