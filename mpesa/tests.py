@@ -7,7 +7,7 @@ class TestSTKPush(TestCase):
     def setUp(self):
         self.client = Client(enforce_csrf_checks=False)
 
-    def test_send_stk_push(self):
+    def test_customer_has_sufficient_funds(self):
         response = self.client.post(
             path='http://localhost:3000/mpesa/request-stk-push/',
             data={
@@ -41,7 +41,7 @@ class TestSTKPush(TestCase):
         response = self.client.post(
             path='http://localhost:3000/mpesa/confirm-stk-push-payment/',
             data={
-                'checkoutRequestID': 'ws_CO_29052071194344781746'
+                'checkoutRequestID': 'ws_CO_29042231104344781746'
             }
         )
         data = response.json()
@@ -57,10 +57,19 @@ class TestSTKPush(TestCase):
             data={
                 'Body': {
                     'stkCallback': {
-                        'MerchantRequestID': '92817-5871928-1',
-                        'CheckoutRequestID': 'ws_CO_30042029106956668241',
-                        'ResultCode': 1031,
-                        'ResultDesc': 'Request cancelled by user'
+                        'MerchantRequestID': '1256-12654756-1',
+                        'CheckoutRequestID': 'ws_CO_05052021143007860557',
+                        'ResultCode': 0,
+                        'ResultDesc': 'The service request is processed successfully.',
+                        'CallbackMetadata': {
+                            'Item': [
+                                {'Name': 'Amount', 'Value': '1.0'},
+                                {'Name': 'MpesaReceiptNumber', 'Value': 'PE52LJ8G4O'},
+                                {'Name': 'TransactionDate', 'Value': 20210505143026},
+                                {'Name': 'PhoneNumber', 'Value': '254712345678'}
+                            ]
+                        }
+
                     }
                 }
             }
