@@ -1,6 +1,6 @@
 Metadata-Version: 2.1
 Name: django-mpesa-payments
-Version: 0.0.3
+Version: 0.0.4
 Summary: A django app to enable online mpesa payments.
 Home-page: https://github.com/HenryKuria/django-mpesa
 Author: Henry Kuria
@@ -116,6 +116,98 @@ Description:
                     self.assertEqual(data['ResponseDescription'], "The service request has been accepted successsfully")
                     self.assertEqual(data['ResultCode'], "0")
                     self.assertEqual(data['ResultDesc'], "The service request is processed successfully.")
+        
+        
+        Usage
+        ----------------
+        **Retrieve a saved mpesa online payment**
+        
+            .. code-block::
+        
+                from mpesa.models import LipaNaMpesaOnlinePayment
+        
+                payment = LipaNaMpesaOnlinePayment.objects.get(checkout_request_Id=<checkout_request_Id>)
+        
+        
+        **Display meta data for a payment**
+        
+            .. code-block::
+        
+                from mpesa.models import LipaNaMpesaOnlinePayment, LipaNaMpesaOnlinePaymentCallbackMetadataItem
+        
+                payment = LipaNaMpesaOnlinePayment.objects.get(checkout_request_Id=<checkout_request_Id>)
+        
+                for meta_data in payment.CallbackMetadataItems.all():
+                    print(meta_data.name, meta_data.value)
+        
+            For each payment, the meta data are:
+                1. The amount paid
+                2. The receipt number of the transaction
+                3. The transaction date
+                4. The phone number of the user that made the payment
+        
+        
+        Further Reading
+        ----------------
+        
+        **Model Reference**
+        
+        class LipaNaMpesaOnlinePayment
+        """"""""""""""""""""""""""""""""""""""""""""
+            This model stores the response data from safaricom when a successful payment is made.
+        
+            *Database Fields*
+        
+            **merchant_request_Id**
+        
+            (text)
+        
+            The ID of the merchant that requested the payment
+        
+            **checkout_request_Id**
+        
+            (text)
+        
+            The ID of the payment request that was made for this payment
+        
+            **result_code**
+        
+            (number)
+        
+            The result code of a payment
+        
+            **result_description**
+        
+            (text)
+        
+            a short description of the transaction.
+        
+        
+        class LipaNaMpesaOnlinePaymentCallbackMetadataItem
+        """"""""""""""""""""""""""""""""""""""""""""""""""
+        
+        This model stores the meta data for each successful payment
+        
+            *Database Fields*
+        
+            **payment**
+        
+            (foreign key to LipaNaMpesaOnlinePayment )
+        
+            The foreign key to the payment that a meta data is for
+        
+            **name**
+        
+            (text)
+        
+            The name of the meta data
+        
+            **value**
+        
+            (text)
+        
+            The value of the meta data item
+        
 Platform: UNKNOWN
 Classifier: Environment :: Web Environment
 Classifier: Framework :: Django :: 3.2

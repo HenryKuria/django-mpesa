@@ -3,7 +3,8 @@ from django.core.exceptions import ValidationError
 
 
 class MpesaDetails(models.Model):
-    site_url = models.URLField(blank=False, null=False, help_text="enter your site full url without '/' at the end. Example: https://mysite.com")
+    site_url = models.URLField(blank=False, null=False,
+                               help_text="enter your site full url without '/' at the end. Example: https://mysite.com")
     daraja_consumer_key = models.CharField(max_length=250, blank=False, null=False)
     daraja_consumer_secret = models.CharField(max_length=250, blank=False, null=False)
     mpesa_shortcode = models.CharField(max_length=250, blank=False, null=False)
@@ -27,7 +28,7 @@ class MpesaDetails(models.Model):
 
 class LipaNaMpesaOnlinePayment(models.Model):
     merchant_request_Id = models.CharField(max_length=250, blank=False, null=False)
-    checkout_request_Id = models.CharField(max_length=250, blank=False, null=False)
+    checkout_request_Id = models.CharField(max_length=250, blank=False, null=False, unique=True)
     result_code = models.IntegerField(blank=False)
     result_description = models.TextField(blank=False)
 
@@ -42,6 +43,7 @@ class LipaNaMpesaOnlinePayment(models.Model):
 
 
 class LipaNaMpesaOnlinePaymentCallbackMetadataItem(models.Model):
-    payment = models.ForeignKey(LipaNaMpesaOnlinePayment, on_delete=models.CASCADE, related_name='CallbackMetadataItems')
+    payment = models.ForeignKey(LipaNaMpesaOnlinePayment, on_delete=models.CASCADE,
+                                related_name='CallbackMetadataItems')
     name = models.CharField(blank=False, max_length=250)
     value = models.CharField(blank=False, max_length=250)
